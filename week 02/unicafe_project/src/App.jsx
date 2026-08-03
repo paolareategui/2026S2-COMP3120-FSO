@@ -21,9 +21,6 @@ const App = () => {
       <button onClick={() => handleBadFeedback()}>bad</button>
 
       <Statistics good={good} neutral={neutral} bad={bad} />
-
-
-      <h2>Statistics</h2>
     </>
   )
 
