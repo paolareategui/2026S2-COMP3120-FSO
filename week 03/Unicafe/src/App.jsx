@@ -34,7 +34,7 @@ const App = () => {
     e.preventDefault()
 
     const found = persons.find((p) =>
-      p.name == newName)
+      p.name === newName)
 
     console.log(found)
 
