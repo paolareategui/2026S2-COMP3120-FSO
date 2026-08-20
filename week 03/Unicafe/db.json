@@ -39,6 +39,47 @@
       "name": "paola2",
       "number": "12345",
       "id": "C5N3yA-vSHw"
+    },
+    {
+      "name": "new person 1",
+      "number": "999-999-999",
+      "id": "tesOJyGtlrw"
+    },
+    {
+      "name": "Another person",
+      "number": "111-111-111",
+      "id": "zGPBriPeWhQ"
+    },
+    {
+      "name": "lets try ",
+      "number": "1`1112",
+      "id": "cSpFJ6IPL8o"
+    },
+    {
+      "name": "one more",
+      "number": "1",
+      "id": "XB2czpogq50"
+    },
+    {
+      "name": "yet one more",
+      "number": "1233",
+      "id": "QWXTNI5L6Y4"
+    },
+    {
+      "name": "1133",
+      "number": "23323232",
+      "id": "3FlhWc6V9oE"
+    },
+    {
+      "name": "2",
+      "number": "2",
+      "id": "imroRfBnJg8"
+    },
+    {
+      "name": "321effwdfgfg",
+      "number": "12132",
+      "id": "d_YRO0U4MPM"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
