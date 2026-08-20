@@ -1,29 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Filter from "./components/Filter"
 import Persons from "./components/Persons"
 import PersonForm from "./components/PersonForm"
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      number: '1234',
-      id: 1
-    },
-    {
-      name: 'Ada Lovelace',
-      number: '123456',
-      id: 2
-    },
-    {
-      name: 'Dan Abramov',
-      number: '12-43-234345', id: 3
-    },
-    {
-      name: 'Mary Poppendieck',
-      number: '39-23-6423122', id: 4
-    }
   ])
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  console.log('render', persons.length, 'persons')
+
   const [newName, setNewName] = useState('')
 
   const [newNumber, setNewNumber] = useState('')
@@ -42,9 +37,26 @@ const App = () => {
       window.alert(`${found.name} is already in the phonebook`)
     }
     else {
-      setPersons(persons.concat({ name: newName, number: newNumber }))
-      setNewName('')
-      setNewNumber('')
+
+      const newPerson = {
+        name: newName,
+        number: newNumber,
+        id: Math.random() > 0.5,
+      }
+
+      axios
+        .post('http://localhost:3001/persons', newPerson)
+        .then(response => {
+          console.log(`the response: ${response.data.name}`)
+
+          setPersons(persons.concat({
+            name: response.data.name,
+            number: response.data.number,
+            id: response.data.id
+          }))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
