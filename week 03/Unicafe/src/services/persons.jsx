@@ -10,7 +10,12 @@ const create = newPerson => {
     return axios.post(baseUrl, newPerson)
 }
 
+const deleteByID = personID => {
+    return axios.delete(`${baseUrl}/${personID}`)
+}
+
 export default {
     getAll: getAll,
-    create: create
+    create: create,
+    deleteByID: deleteByID
 }

@@ -53,6 +53,15 @@ const App = () => {
     }
   }
 
+  const handleDelete = (id) => {
+    personService
+    .deleteByID(id)
+    .then(response => {
+      console.log(response.data)
+      setPersons(persons.filter(p => p.id !== response.data.id))
+    })
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -62,7 +71,7 @@ const App = () => {
       <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber} />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} filterText={filterText} />
+      <Persons persons={persons} filterText={filterText} handleDelete={handleDelete} />
 
     </div>
   )
