@@ -29,16 +29,6 @@
       "name": "11233",
       "number": "323223224rer",
       "id": "vbpXEBt5gCI"
-    },
-    {
-      "name": "paola",
-      "number": "123443",
-      "id": "2PfJSEqnSJw"
-    },
-    {
-      "name": "paola2",
-      "number": "12345",
-      "id": "C5N3yA-vSHw"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

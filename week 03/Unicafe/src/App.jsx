@@ -25,6 +25,8 @@ const App = () => {
 
   const [filterText, setFilterText] = useState('')
 
+  const [userFeedback, setUserFeedback] = useState('')
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -53,13 +55,26 @@ const App = () => {
     }
   }
 
+      const messageHandler = message => {
+      setUserFeedback(message)
+      setTimeout(() => {
+        setUserFeedback('')
+      }, 5000)
+    }
+
   const handleDelete = (id) => {
-    personService
-    .deleteByID(id)
-    .then(response => {
-      console.log(response.data)
-      setPersons(persons.filter(p => p.id !== response.data.id))
-    })
+    if (window.confirm("Are you sure you want to delete")) {
+      personService
+        .deleteByID(id)
+        .then(response => {
+          console.log(response.data)
+          setPersons(persons.filter(p => p.id !== response.data.id))
+          messageHandler(`${response.data.name} has been deleted`)
+        })
+    } else {
+      messageHandler("Ok we won't delete that")
+    }
+
   }
 
   return (
@@ -70,7 +85,9 @@ const App = () => {
       <h2>Add a new number</h2>
       <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber} />
 
+
       <h2>Numbers</h2>
+      <h3>{userFeedback}</h3>
       <Persons persons={persons} filterText={filterText} handleDelete={handleDelete} />
 
     </div>
