@@ -36,7 +36,11 @@ const App = () => {
     console.log(found)
 
     if (found) {
-      window.alert(`${found.name} is already in the phonebook`)
+      if (window.confirm(`${found.name} is already in the phonebook`)) {
+        personService
+          .update({ number: newNumber }, found.id)
+          .then(response => setPersons(persons.map(p => p.id === found.id ? response.data : p)))
+      }
     }
     else {
 
@@ -55,12 +59,12 @@ const App = () => {
     }
   }
 
-      const messageHandler = message => {
-      setUserFeedback(message)
-      setTimeout(() => {
-        setUserFeedback('')
-      }, 5000)
-    }
+  const messageHandler = message => {
+    setUserFeedback(message)
+    setTimeout(() => {
+      setUserFeedback('')
+    }, 5000)
+  }
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete")) {
