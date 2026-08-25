@@ -64,17 +64,16 @@ const App = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete")) {
+      const currPerson = persons.find(p => p.id === id)
       personService
         .deleteByID(id)
-        .then(response => {
-          console.log(response.data)
-          setPersons(persons.filter(p => p.id !== response.data.id))
-          messageHandler(`${response.data.name} has been deleted`)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+          messageHandler(`${currPerson.name} has been deleted`)
         })
     } else {
       messageHandler("Ok we won't delete that")
     }
-
   }
 
   return (
