@@ -1,39 +1,56 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
 app.use(express.json())
 app.use(express.static('dist'))
+require('dotenv').config()
 
-
-let persons = [
-  {
-    "id": "1",
-    "name": "Arto Hellas",
-    "number": "040-123456"
-  },
-  {
-    "id": "2",
-    "name": "Ada Lovelace",
-    "number": "39-44-5323523"
-  },
-  {
-    "id": "3",
-    "name": "Dan Abramov",
-    "number": "12-43-234345"
-  },
-  {
-    "id": "4",
-    "name": "Mary Poppendieck",
-    "number": "39-23-6423122"
-  }
-]
-
+const Person = require('./models/person')
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({}).then(p => {
+    response.json(p)
+  })
+})
+
+app.post('/api/persons/', (request, response) => {
+
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "the name is missing"
+    })
+  }
+  if (!body.number) {
+    return response.status(400).json({
+      error: "the number is missing"
+    })
+  }
+
+  Person.find({}).then(people => {
+    const alreadyExists = people.some(p => p.name.toLowerCase() === body.name.toLowerCase())
+
+    if (alreadyExists) {
+      return response.status(400).json({
+        error: "this person is already on the phone book"
+      })
+    }
+
+    else {
+      const person = new Person({
+        name: body.name,
+        number: body.number,
+      })
+      person.save().then(newPerson => {
+        response.json(newPerson)
+      })
+    }
+  })
 })
 
 app.get('/info', (request, response) => {
@@ -61,45 +78,13 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
-app.post('/api/persons/', (request, response) => {
-  const maxId = persons.length > 0
-    ? Math.max(...persons.map(n => Number(n.id)))
-    : 0
-  const person = request.body
-  person.id = String(maxId + 1)
-
-  if (!person.name) {
-    return response.status(400).json({
-      error: "the name is missing"
-    })
-  }
-  if (!person.number) {
-    return response.status(400).json({
-      error: "the number is missing"
-    })
-  }
-
-  const alreadyExists = persons.find(p => p.name.toLowerCase() === person.name.toLowerCase())
-
-  if (alreadyExists) {
-    return response.status(400).json({
-      error: "this person is already on the phone book"
-    })
-  }
-
-  else {
-    persons = persons.concat(person)
-    return response.json(person)
-  }
-
-
-})
 
 
 
 
 
-const PORT = process.env.PORT || 3001
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
