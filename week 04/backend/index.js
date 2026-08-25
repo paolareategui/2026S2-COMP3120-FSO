@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
 app.use(express.json())
 app.use(express.static('dist'))
 require('dotenv').config()
@@ -25,12 +24,12 @@ app.post('/api/persons/', (request, response, next) => {
 
   if (!body.name) {
     return response.status(400).json({
-      error: "the name is missing"
+      error: 'the name is missing'
     })
   }
   if (!body.number) {
     return response.status(400).json({
-      error: "the number is missing"
+      error: 'the number is missing'
     })
   }
 
@@ -40,7 +39,7 @@ app.post('/api/persons/', (request, response, next) => {
 
       if (alreadyExists) {
         return response.status(400).json({
-          error: "this person is already on the phone book"
+          error: 'this person is already on the phone book'
         })
       }
 
@@ -90,7 +89,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 app.delete('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
   Person.findByIdAndDelete(id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
