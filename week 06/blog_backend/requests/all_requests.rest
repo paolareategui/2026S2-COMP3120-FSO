@@ -1,0 +1,25 @@
+DELETE http://localhost:3003/api/blogs/6a9505c1d811b8f813823bfb
+
+###
+
+POST http://localhost:3003/api/blogs/ HTTP/1.1
+content-type: application/json
+
+{
+    "title": "My second post",
+    "author": "Paola",
+    "url": "test.com",
+    "likes": 2
+}
+
+###
+PUT http://localhost:3003/api/blogs/6a9505c1d811b8f813823bfb
+Content-Type: application/json
+
+{
+     "name": "Paola",
+     "number": "555-555-555"
+}
+
+###
+GET http://localhost:3003/api/blogs/6a9505c1d811b8f813823bfb
